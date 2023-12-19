@@ -2,7 +2,16 @@
 
 VERSION="0.1"
 
+scripts_dir="scripts"
+
 case "$1" in
+	register)
+		
+		shift
+		python3 ${scripts_dir}/register_node.py $@
+		exit $?
+		;;
+
 	-v|--version)		
 		
 		echo "DeployBox v$VERSION"
