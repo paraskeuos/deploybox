@@ -37,4 +37,9 @@ def get_key_path(name):
 def save_key(name, key):
 	from shutil import copy
 	
-	copy(key, dst=get_key_path(name))
+	try:
+		copy(key, dst=get_key_path(name))
+	except Exception as e:
+		from sys import stderr
+		stderr.write(str(e))
+		exit(1)
