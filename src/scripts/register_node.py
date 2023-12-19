@@ -1,4 +1,5 @@
 import sys
+from lib.hostutils import load_hosts
 
 if __name__=="__main__":
 	if len(sys.argv) != 8:
@@ -16,19 +17,14 @@ if __name__=="__main__":
 			case "--host":
 				host = sys.argv[i+1]
 				i += 1
-				print(f"Host: {host}")
 			case "--username":
 				username = sys.argv[i+1]
 				i += 1
-				print(f"Username: {username}")
 			case "--key":
 				key_path = sys.argv[i+1]
 				i += 1
-				print(f"Key: {key_path}")
 			case default:
 				node_name = sys.argv[i]
-				print(f"Name: {node_name}")
 		i += 1
 	
-	print(host, username, key_path, node_name)
-			
+	hosts = load_hosts()
