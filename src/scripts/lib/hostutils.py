@@ -17,14 +17,8 @@ def load_hosts():
 
 		with open(hosts_file, "w") as f:
 			json.dump(hosts, f)
-
-		return hosts
-
-	# TODO: If hosts file exists, load json and return dict 
-	with open(hosts_file, "r") as f:
-		json_data = json.load(f)
-
-	for name, host_data in json_data.items():
-		# TODO
+	else:
+		with open(hosts_file, "r") as f:
+			hosts = json.load(f)
 
 	return hosts
