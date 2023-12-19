@@ -1,5 +1,6 @@
 import sys
-from lib.hostutils import load_hosts
+from lib.hostutils import load_hosts, save_hosts, save_key
+import subprocess as sp
 
 if __name__=="__main__":
 	if len(sys.argv) != 8:
@@ -26,5 +27,21 @@ if __name__=="__main__":
 			case default:
 				node_name = sys.argv[i]
 		i += 1
+
+	# Test connection
+	cmd = f"ssh -o StrictHostKeyChecking=no -o PasswordAuthentication=no -i {key_path} {username}@{host} exit"
+	proc = sp.Popen(cmd, shell=True, stdout=sp.PIPE, stderr=sp.PIPE)
+	_, stderr = proc.communicate()
+	if proc.returncode != 0:
+		sys.stderr.write(stderr.decode())
+		exit(1)
 	
 	hosts = load_hosts()
+	hosts[node_name] = {
+		"host": host,
+		"username": username,
+		"instances": []
+	}
+	
+	save_key(name=node_name, key=key_path)
+	save_hosts(hosts)
