@@ -19,6 +19,13 @@ case "$1" in
 		exit $?
 		;;
 
+	login)
+
+		shift
+		login_vars="$(python3 ${scripts_dir}/set_login_vars.py $1)"
+		echo $login_vars
+		;;
+
 	-v|--version)		
 		
 		echo "DeployBox v$VERSION"
