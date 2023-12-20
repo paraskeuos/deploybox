@@ -43,3 +43,12 @@ def save_key(name, key):
 		from sys import stderr
 		stderr.write(str(e))
 		exit(1)
+
+def remote_command(username, host, key, command):
+	from subprocess import Popen, PIPE
+
+	ssh_cmd = f"ssh -o StrictHostKeyChecking=no -o PasswordAuthentication=no -i {key} {username}@{host} '{command}'"
+	proc = Popen(ssh_cmd, shell=True, stdout=PIPE, stderr=PIPE)
+	stdout, stderr = proc.communicate()	
+
+	return (proc.returncode, stdout.decode(), stderr.decode())

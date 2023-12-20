@@ -1,5 +1,5 @@
 import sys
-from lib.hostutils import load_hosts, save_hosts, save_key
+from lib.hostutils import load_hosts, save_hosts, save_key, remote_command
 import subprocess as sp
 
 if __name__=="__main__":
@@ -29,11 +29,15 @@ if __name__=="__main__":
 		i += 1
 
 	# Test connection
-	cmd = f"ssh -o StrictHostKeyChecking=no -o PasswordAuthentication=no -i {key_path} {username}@{host} exit"
-	proc = sp.Popen(cmd, shell=True, stdout=sp.PIPE, stderr=sp.PIPE)
-	_, stderr = proc.communicate()
-	if proc.returncode != 0:
-		sys.stderr.write(stderr.decode())
+	return_code, _, stderr = remote_command(
+		username = username,
+		host = host,
+		key = key_path,
+		command = "exit"
+		)
+
+	if return_code != 0:
+		sys.stderr.write(stderr)
 		exit(1)
 	
 	hosts = load_hosts()
