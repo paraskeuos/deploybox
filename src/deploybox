@@ -25,7 +25,8 @@ case "$1" in
 		if ( python3 ${scripts_dir}/ping.py $1 1> /dev/null )
 		then
 			login_vars="$(python3 ${scripts_dir}/set_login_vars.py $1)"
-			echo $login_vars
+			eval $login_vars
+			ssh -o StrictHostKeyChecking=no -i $key ${username}@${host}
 		fi
 		;;
 
