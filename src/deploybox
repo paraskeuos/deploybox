@@ -11,6 +11,13 @@ case "$1" in
 		python3 ${scripts_dir}/register_node.py $@
 		exit $?
 		;;
+
+	unregister)
+
+		shift
+		python3 ${scripts_dir}/unregister_node.py $1
+		exit $?
+		;;
 	
 	ping)
 

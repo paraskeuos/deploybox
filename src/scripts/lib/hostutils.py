@@ -44,6 +44,16 @@ def save_key(name, key):
 		stderr.write(str(e))
 		exit(1)
 
+def delete_key(name):
+	from os import remove
+	
+	try:
+		remove(get_key_path(name))
+	except Exception as e:
+		from sys import stderr
+		stderr.write(str(e))
+		exit(1)
+	
 def remote_command(username, host, key, command):
 	from subprocess import Popen, PIPE
 
