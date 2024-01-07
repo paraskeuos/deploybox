@@ -34,7 +34,7 @@ if __name__=="__main__":
 		host = host,
 		key = key_path,
 		command = "exit"
-		)
+	)
 
 	if return_code != 0:
 		sys.stderr.write(stderr)
@@ -60,7 +60,7 @@ if __name__=="__main__":
 	
 	if return_code != 0:
 		sys.stderr.write(stderr)
-		#exit(1)
+		exit(1)
 	sys.stdout.write(stdout)
 
 	return_code, stdout, stderr = remote_copy(
