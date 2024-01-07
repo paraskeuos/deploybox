@@ -61,7 +61,6 @@ if __name__=="__main__":
 	if return_code != 0:
 		sys.stderr.write(stderr)
 		exit(1)
-	sys.stdout.write(stdout)
 
 	return_code, stdout, stderr = remote_copy(
 		username = username,
@@ -74,6 +73,5 @@ if __name__=="__main__":
 	if return_code != 0:
 		sys.stderr.write(stderr)
 		exit(1)
-	sys.stdout.write(stdout)
 
 	sys.stdout.write(f"Node '{host}' registered successfully.\n")
