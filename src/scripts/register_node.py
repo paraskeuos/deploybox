@@ -1,5 +1,5 @@
 import sys
-from lib.hostutils import load_hosts, save_hosts, save_key, remote_command
+from lib.hostutils import load_hosts, save_hosts, save_key, remote_command, remote_copy, get_key_path
 import subprocess as sp
 
 if __name__=="__main__":
@@ -34,7 +34,7 @@ if __name__=="__main__":
 		host = host,
 		key = key_path,
 		command = "exit"
-		)
+	)
 
 	if return_code != 0:
 		sys.stderr.write(stderr)
@@ -49,3 +49,29 @@ if __name__=="__main__":
 	
 	save_key(name=node_name, key=key_path)
 	save_hosts(hosts)
+
+	# Upload scripts
+	return_code, stdout, stderr = remote_command(
+		username = username,
+		host = host,
+		key = get_key_path(node_name),
+		command = "mkdir .deploybox"
+	)
+	
+	if return_code != 0:
+		sys.stderr.write(stderr)
+		exit(1)
+
+	return_code, stdout, stderr = remote_copy(
+		username = username,
+		host = host,
+		key = get_key_path(node_name),
+		src = "scripts/node_scripts",
+		dest = ".deploybox"
+	)
+
+	if return_code != 0:
+		sys.stderr.write(stderr)
+		exit(1)
+
+	sys.stdout.write(f"Node '{host}' registered successfully.\n")

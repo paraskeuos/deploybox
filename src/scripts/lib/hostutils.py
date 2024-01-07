@@ -62,3 +62,12 @@ def remote_command(username, host, key, command):
 	stdout, stderr = proc.communicate()	
 
 	return (proc.returncode, stdout.decode(), stderr.decode())
+
+def remote_copy(username, host, key, src, dest):
+	from subprocess import Popen, PIPE
+
+	scp_cmd = f"scp -o StrictHostKeyChecking=no -o PasswordAuthentication=no -i {key} -r {src} {username}@{host}:{dest}"
+	proc = Popen(scp_cmd, shell=True, stdout=PIPE, stderr=PIPE)
+	stdout, stderr = proc.communicate()
+
+	return (proc.returncode, stdout.decode(), stderr.decode())
