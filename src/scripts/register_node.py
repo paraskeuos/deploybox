@@ -1,5 +1,5 @@
 import sys
-from lib.hostutils import load_hosts, save_hosts, save_key, remote_command, remote_copy
+from lib.hostutils import load_hosts, save_hosts, save_key, remote_command, remote_copy, get_key_path
 import subprocess as sp
 
 if __name__=="__main__":
@@ -54,7 +54,7 @@ if __name__=="__main__":
 	return_code, stdout, stderr = remote_command(
 		username = username,
 		host = host,
-		key = key_path,
+		key = get_key_path(node_name),
 		command = "mkdir .deploybox"
 	)
 	
@@ -66,7 +66,7 @@ if __name__=="__main__":
 	return_code, stdout, stderr = remote_copy(
 		username = username,
 		host = host,
-		key = key_path,
+		key = get_key_path(node_name),
 		src = "scripts/node_scripts",
 		dest = ".deploybox"
 	)
